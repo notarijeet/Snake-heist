@@ -133,18 +133,7 @@ window.addEventListener('load', () => {
   }
 
   //Main Logic Starts here;
-  let hiscore = localStorage.getItem('hiscore');
-  if(hiscore === null){
-    hiscoreval = 0;
-    localStorage.setItem('hiscore', JSON.stringify(hiscoreval))
-
-  }
-  else{
-    hiscoreval = JSON.parse(hiscore);
-    hiscoreBox.innerHTML = "High score: " + hiscoreval;
-
-  }
-
+  
   window.requestAnimationFrame(main);
 
   window.addEventListener('keydown', e => {
