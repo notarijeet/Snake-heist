@@ -143,7 +143,44 @@ window.addEventListener('load', () => {
       case "ArrowLeft": if (inputDir.x !== 1) inputDir = { x: -1, y: 0 }; break;
       case "ArrowRight": if (inputDir.x !== -1) inputDir = { x: 1, y: 0 }; break;
     }
+
+      
   });
+
+// Touch input support for mobile
+let touchStartX = 0;
+let touchStartY = 0;
+
+window.addEventListener("touchstart", function (e) {
+  touchStartX = e.touches[0].clientX;
+  touchStartY = e.touches[0].clientY;
+}, false);
+
+window.addEventListener("touchend", function (e) {
+  const touchEndX = e.changedTouches[0].clientX;
+  const touchEndY = e.changedTouches[0].clientY;
+
+  const diffX = touchEndX - touchStartX;
+  const diffY = touchEndY - touchStartY;
+
+  // Determine swipe direction
+  if (Math.abs(diffX) > Math.abs(diffY)) {
+    // Horizontal swipe
+    if (diffX > 0 && inputDir.x !== -1) {
+      inputDir = { x: 1, y: 0 }; // swipe right
+    } else if (diffX < 0 && inputDir.x !== 1) {
+      inputDir = { x: -1, y: 0 }; // swipe left
+    }
+  } else {
+    // Vertical swipe
+    if (diffY > 0 && inputDir.y !== -1) {
+      inputDir = { x: 0, y: 1 }; // swipe down
+    } else if (diffY < 0 && inputDir.y !== 1) {
+      inputDir = { x: 0, y: -1 }; // swipe up
+    }
+  }
+}, false);
+
 
   restartBtn.addEventListener("click", () => {
     snakeArr = [{ x: 13, y: 15 }];
